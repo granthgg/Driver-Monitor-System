@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "65936314048",
+    "project_id": "botomine-f7edb",
+    "storage_bucket": "botomine-f7edb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65936314048:android:86ccd26944741d84fee725",
+        "android_client_info": {
+          "package_name": "com.example.botomine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjHO3U6e10nJYR9bvWFKD3a1KuBx1ASEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

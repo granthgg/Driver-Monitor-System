@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DriveAssure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+        }
+        header, footer {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            background-color: #000000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+        }
+        .logo {
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            height: 60px;
+        }
+        header {
+            top: 0;
+            }
+
+        footer {
+            bottom: 0;
+            justify-content: space-between;
+            padding: 0 20px;
+            align-items: center;
+        }
+
+        .content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 60px 20px 20px;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0 auto;
+            flex-wrap: wrap;
+
+        }
+
+        .video-container, .metrics-container {
+            padding: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.7);
+            margin: 10px;
+            border-radius: 8px;
+            background: rgba(218, 218, 218, 0.5);
+            transition: transform 0.5s ease-out;
+        }
+        .video-container:hover, .metrics-container:hover{
+            transform: scale(1.02);
+        }
+        .metric {
+            background: #151515;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        .metric:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+        .metric h2, .metric p {
+            margin: 0 5px;
+            color: #ffffff;
+        }
+        .alert-meter {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .alert-meter-value {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            border-radius: 8px;
+            transition: width 2s ease-in-out;
+        }
+
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+
+        }
+        button:hover {
+            background-color: #6dc052;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(44, 44, 44, 0.6);
+        }
+        button:disabled {
+            background-color: #919191;
+            cursor: not-allowed;
+        }
+        #video-status {
+    margin-left: 150px;
+    color: #000000;
+    background-color: transparent;
+    font-size: 15px;
+            font-weight:450;
+}
+
+        @media (max-width: 980px) {
+    .content {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10rem;
+        padding: 30px 10px;
+        width: 100%;
+    }
+    .video-container {
+        width: 80%;
+        margin: 5px auto;
+
+    }
+    #video-feed{
+        width:100%;
+        aspect-ratio: 16/9;
+    }
+    .metrics-container {
+        width:80%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .metric{
+        width: 40%;
+        margin: 5px;
+        padding: 10px;
+        text-align: center;
+    }
+    header, footer {
+        position: static;
+    }
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: rgba(255, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s;
+}
+
+#alert-popup {
+    background-color: rgba(246, 35, 35, 0.9);
+}
+
+#warning-popup {
+    background-color: rgba(255, 154, 0, 0.9);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        top: 40%;
+    }
+    to {
+        opacity: 1;
+        top: 50%;
+    }
+}
+
+
+    </style>
+</head>
+<body onload="getLocation()">
+    <header>
+        <img src="../static/DriveAssure_logo.png" class="logo" alt="DriveAssure Logo">
+        <h1>DRIVER MONITOR DASHBOARD</h1>
+    </header>
+    <audio id="alertSound" src="C:\Users\grant\Desktop\Web App_test\templates\alert_sound_1.wav" preload="auto"></audio>
+
+    <div class="content">
+        <!-- Left metrics container -->
+        <div class="metrics-container">
+            <div class="metric">
+                <h2>Left Eye:</h2>
+                <p id="left_eye">{{ left_eye }}</p>
+            </div>
+            <div class="metric">
+                <h2>Mouth Status:</h2>
+                <p id="mouth">{{ mouth }}</p>
+            </div>
+            <div class="metric">
+                <h2>Pupil Status:</h2>
+                <p id="Pupil_direction">{{ Pupil_direction }}</p>
+            </div>
+            <div class="metric">
+                <h2>Talking:</h2>
+                <p id="Talking">{{ Talking }}</p>
+            </div>
+            <div class="metric">
+                <h2>State:</h2>
+                <p id="State">{{ State }}</p>
+            </div>
+        </div>
+
+        <div class="video-container">
+            <img id="video-feed" src="../static/Dall-e Art.jpg" alt="Video Feed">
+            <div class="alert-meter">
+                <div id="alert-meter-value" class="alert-meter-value"></div>
+            </div>
+            <div class="button-container">
+                <button id="start-button">Start</button>
+                <button id="stop-button" disabled>Stop</button>
+                <span id="video-status">No Video Feed !</span>
+            </div>
+        </div>
+
+        <!-- Right metrics container -->
+        <div class="metrics-container">
+            <div class="metric">
+                <h2>Right Eye:</h2>
+                <p id="right_eye">{{ right_eye }}</p>
+            </div>
+            <div class="metric">
+                <h2>Looking:</h2>
+                <p id="direction">{{ direction }}</p>
+            </div>
+            <div class="metric">
+                <h2>Using Phone:</h2>
+                <p id="Using_Phone">{{ Using_Phone }}</p>
+            </div>
+            <div class="metric">
+                <h2>Yawning:</h2>
+                <p id="Yawning">{{ Yawning }}</p>
+            </div>
+            <div class="metric">
+                <h2>SeatBelt:</h2>
+                <p id="No">{{ "No" }}</p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div style="display: flex; align-items: center;">
+            <i class="fa fa-location-dot" style="color: white;"></i>
+            <p id="location" style="margin-left: 10px;">Fetching location...</p>
+        </div>
+    </footer>
+
+    <script>
+    setInterval(function(){
+        fetch('/get_metrics')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('mouth').innerText = data.mouth;
+                document.getElementById('left_eye').innerText = data.left_eye;
+                document.getElementById('right_eye').innerText = data.right_eye;
+                document.getElementById('direction').innerText = data.direction;
+                document.getElementById('Using_Phone').innerText = data.Using_Phone;
+                document.getElementById('Pupil_direction').innerText = data.Pupil_direction;
+                document.getElementById('Yawning').innerText = data.Yawning;
+                document.getElementById('Talking').innerText = data.Talking;
+                document.getElementById('State').innerText = data.State;
+            })
+        .catch(error => console.error('Error fetching metrics:', error));
+        }, 400);
+
+    setInterval(function(){
+    fetch('/get_alertness')
+        .then(response => response.json())
+        .then(data => {
+            const score = data.alertness_score;
+            const alertnessPercentage = score * 100;
+            const meter = document.querySelector('.alert-meter-value');
+            const alertSound = document.getElementById('alertSound');
+            meter.style.width = `${alertnessPercentage}%`;
+
+            document.getElementById('warning-popup').style.display = 'none';
+            document.getElementById('alert-popup').style.display = 'none';
+
+
+            if (alertnessPercentage < 50) {
+                alertSound.play();
+                meter.style.backgroundColor = '#f53725';
+                document.getElementById('alert-popup').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('alert-popup').style.display = 'none';
+
+                }, 10000);
+
+
+            } else if (alertnessPercentage < 75) {
+                meter.style.backgroundColor = '#f39c12';
+                document.getElementById('warning-popup').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('warning-popup').style.display = 'none';
+                }, 10000);
+
+            } else {
+                meter.style.backgroundColor = '#0ba84d';
+                alertSound.pause();
+                alertSound.currentTime = 0;
+            }
+        })
+    .catch(error => console.error('Error fetching alertness score:', error));
+}, 400);
+
+    const startButton = document.getElementById('start-button');
+const stopButton = document.getElementById('stop-button');
+const videoFeed = document.getElementById('video-feed');
+
+
+function startVideoFeed() {
+    videoFeed.src = "{{ url_for('video_feed') }}";
+    document.getElementById('video-status').innerText = "Video Feed Connecting...";
+    setTimeout(() => { document.getElementById('video-status').innerText = "Analyzing the Driver"; }, 6000);
+    startButton.disabled = true;
+    stopButton.disabled = false;
+}
+
+
+function stopVideoFeed() {
+    videoFeed.src = "../static/Dall-e Art.jpg";
+    videoFeed.style.backgroundColor = 'transparent';
+    document.getElementById('video-status').innerText = "No Video Feed !";
+    stopButton.disabled = true;
+}
+function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            document.getElementById('location').innerText = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        var locationText = " Latitude: " + position.coords.latitude +
+            ", Longitude: " + position.coords.longitude;
+        document.getElementById('location').innerText = locationText;
+        document.getElementById('location-metric').style.display = 'block';
+    }
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                document.getElementById('location').innerText = "User denied the request for Geolocation."
+                break;
+            case error.POSITION_UNAVAILABLE:
+                document.getElementById('location').innerText = "Location information is unavailable."
+                break;
+            case error.TIMEOUT:
+                document.getElementById('location').innerText = "The request to get user location timed out."
+                break;
+            case error.UNKNOWN_ERROR:
+                document.getElementById('location').innerText = "An unknown error occurred."
+                break;
+        }
+        document.getElementById('location-metric').style.display = 'block';
+    }
+    function sendLocationData(latitude, longitude) {
+            fetch('/update_location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    latitude: latitude,
+                    longitude: longitude
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.error("Error sending location data");
+                }
+            });
+        }
+
+startButton.addEventListener('click', startVideoFeed);
+stopButton.addEventListener('click', stopVideoFeed);
+    </script>
+<div id="warning-popup" class="popup">
+    <p>Warning: Please Pay Attention!</p>
+</div>
+
+<div id="alert-popup" class="popup">
+    <p>Danger: Immediate Action Required!</p>
+</div>
+</body>
+</html>
