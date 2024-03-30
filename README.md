@@ -4,13 +4,13 @@ This project is an application designed to run on any device to track driver act
 This project is made using the model trained using YoloV8, Dlib, OpenCV's libraries, etc.
 This project consist of a Flask based Web App and an Flutter based Android Application to track driver activity from any place.
 
-### DASHBOARD WEBAPP
+### Dashboard Webapp
 <div>
 <img src="https://github.com/granthgg/Distracted-Drowsy-Driver-Detection/assets/69439823/7b778a76-bcb0-4cb3-b36b-2f6f3da649d7" />&nbsp; 
 <img src="https://github.com/granthgg/Distracted-Drowsy-Driver-Detection/assets/69439823/4fd222c4-fd45-423f-b0af-c26cd68431e4"  />&nbsp; 
 <div>
 
-### TRACKING MOBILE APP
+### Tracking Mobile App
 <div>
 <img src="https://github.com/granthgg/Driver-Monitor-System/assets/69439823/6af6c389-ef67-46de-a552-4b0b5ba6230a"  height="400"/>&nbsp; 
 <img src="https://github.com/granthgg/Driver-Monitor-System/assets/69439823/0263b8c3-9e8c-489c-9250-1bd47b9ec4fc"  height="400"/>&nbsp; 
