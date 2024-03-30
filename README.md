@@ -10,9 +10,9 @@ This project consist of a Flask based Web App and an Flutter based Android Appli
 <div>
 
 <div>
-<img src="https://github.com/granthgg/Driver-Monitor-System/assets/69439823/6af6c389-ef67-46de-a552-4b0b5ba6230a"  />&nbsp; 
-<img src="https://github.com/granthgg/Driver-Monitor-System/assets/69439823/0263b8c3-9e8c-489c-9250-1bd47b9ec4fc"  height="520"/>&nbsp; 
-<img src="https://github.com/granthgg/Driver-Monitor-System/assets/69439823/6762ffc3-a929-4075-8326-0c077c048ec4"  height="520"/>&nbsp; 
+<img src="https://github.com/granthgg/Driver-Monitor-System/assets/69439823/6af6c389-ef67-46de-a552-4b0b5ba6230a"  height="400"/>&nbsp; 
+<img src="https://github.com/granthgg/Driver-Monitor-System/assets/69439823/0263b8c3-9e8c-489c-9250-1bd47b9ec4fc"  height="400"/>&nbsp; 
+<img src="https://github.com/granthgg/Driver-Monitor-System/assets/69439823/6762ffc3-a929-4075-8326-0c077c048ec4"  height="400"/>&nbsp; 
 <div>
 
 
